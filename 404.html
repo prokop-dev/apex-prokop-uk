@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | prokop.uk</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --prompt-color: #7ee787;
+            --path-color: #79c0ff;
+            --error-color: #ff7b72;
+            --comment-color: #8b949e;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 2rem;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .terminal {
+            width: 100%;
+            max-width: 800px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            overflow-x: auto;
+        }
+        .line { margin-bottom: 0.5rem; }
+        .prompt { color: var(--prompt-color); font-weight: bold; }
+        .path { color: var(--path-color); font-weight: bold; }
+        .error { color: var(--error-color); }
+        .comment { color: var(--comment-color); }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background-color: var(--text-color);
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        a {
+            color: var(--path-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* A little JavaScript to grab the actual path they tried to visit */
+        .dynamic-path::after {
+            content: " " attr(data-path);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <div class="line comment">Last login: Tue Mar 17 18:04:02 2026 from 127.0.0.1</div>
+        <br>
+        <div class="line">
+            <span class="prompt">admin@prokop.uk</span>:<span class="path">~</span>$ curl -I https://prokop.uk<span id="requested-path"></span>
+        </div>
+        <div class="line error">HTTP/2 404 Not Found</div>
+        <div class="line">server: cloudflare</div>
+        <div class="line">content-type: text/plain</div>
+        <div class="line">x-infrastructure-status: headless</div>
+        <br>
+        <div class="line">
+            <span class="prompt">admin@prokop.uk</span>:<span class="path">~</span>$ ./diagnostics.sh
+        </div>
+        <div class="line">[FAIL] The requested endpoint does not exist on this node.</div>
+        <div class="line">[INFO] This domain operates as a headless infrastructure endpoint.</div>
+        <div class="line">[INFO] Human-readable content is intentionally disabled.</div>
+        <div class="line">[INFO] Standard web protocols have been suspended in favor of API and WKD routing.</div>
+        <br>
+        <div class="line">
+            <span class="prompt">admin@prokop.uk</span>:<span class="path">~</span>$ <span class="cursor"></span>
+        </div>
+    </div>
+
+    <script>
+        // Grab the actual path they typed and display it in the simulated curl command
+        const pathElement = document.getElementById('requested-path');
+        const currentPath = window.location.pathname;
+        if (currentPath !== '/') {
+            pathElement.textContent = currentPath;
+        } else {
+            pathElement.textContent = '/';
+        }
+    </script>
+
+</body>
+</html>
