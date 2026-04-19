@@ -1,0 +1,8 @@
+# Family QR Redirects (using 307 Temporary Redirects)
+/bart    https://sherr.it/your-profile-id       307
+/asia    https://sherr.it/annas-profile-id      307
+/natan   https://linktree.com/whatever          307
+/edwin   https://linktree.com/whatever          307
+
+# Optional: A fallback for anyone who just types prokop.uk
+#/        https://prokop.dev                     302
